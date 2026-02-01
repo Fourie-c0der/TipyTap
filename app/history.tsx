@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import TransactionCard from '../../src/components/TransactionCard';
-import paymentService from '../../src/services/paymentService';
-import colors from '../../src/constants/colors';
-import { Transaction } from '../../src/types';
+import TransactionCard from '../src/components/TransactionCard';
+import paymentService from '../src/services/paymentService';
+import colors from '../src/constants/colors';
+import { Transaction } from '../src/types';
 
 export default function HistoryScreen() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);

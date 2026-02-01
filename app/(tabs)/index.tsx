@@ -13,6 +13,8 @@ import AmountButton from '../../src/components/AmountButton';
 import { config } from '../../src/constants/config';
 import colors from '../../src/constants/colors';
 
+import { ImageBackground } from 'react-native';
+
 export default function TipIndex() {
   const router = useRouter();
   const [selected, setSelected] = useState<number | null>(config.TIP_AMOUNTS[0]);
@@ -29,6 +31,9 @@ export default function TipIndex() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+
+      <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}></ImageBackground>
+
       <WalletCard balance={123.45} lastUpdated={new Date()} />
 
       <Text style={styles.sectionTitle}>Choose Amount</Text>
@@ -44,15 +49,14 @@ export default function TipIndex() {
         ))}
       </View>
 
-      <TouchableOpacity style={styles.scanButton} onPress={handleScan}>
-        <Text style={styles.scanButtonText}>Scan QR to Tip</Text>
-      </TouchableOpacity>
+
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { backgroundColor: '#000' },
+  bg: { opacity: 0.45, position: 'absolute', top: 0 },
   content: { paddingVertical: 20 },
   sectionTitle: {
     color: '#FFF',
