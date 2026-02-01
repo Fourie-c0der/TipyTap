@@ -19,6 +19,9 @@ import authService from '../../src/services/authService';
 import Validators from '../../src/utils/validators';
 import colors from '../../src/constants/colors';
 
+import { ImageBackground } from 'react-native';
+import background from '../../src/assets/images/background.png';
+
 export default function LoginScreen() {
   const router = useRouter();
   const [email, setEmail] = useState('');
@@ -51,6 +54,9 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
+
+      <ImageBackground style={styles.bg} source={background}></ImageBackground>
+
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
@@ -59,7 +65,7 @@ export default function LoginScreen() {
           <View style={styles.header}>
             <Image
               source={require('../../src/assets/images/TipyTap-Logo.png')}
-              style={{ width: 200, height: 200, resizeMode: 'contain' }}
+              style={{ width: 250, height: 250, resizeMode: 'contain', backgroundColor: '#E8E8E8', borderRadius: 250 }}
             />
           </View>
           <View style={styles.form}>
@@ -126,6 +132,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000',
   },
+  bg: { opacity: 0.45, position: 'absolute', top: 0 },
   keyboardView: {
     flex: 1,
   },
@@ -156,11 +163,13 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    borderRadius: 12,
+    backgroundColor: 'rgba(81, 81, 81, 0.5)',
+    borderRadius: 5,
     paddingHorizontal: 16,
     marginBottom: 16,
     height: 56,
+    borderColor: '#FE6F03',
+    borderWidth: 2,
   },
   icon: {
     marginRight: 12,
@@ -171,14 +180,14 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   loginButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    borderRadius: 12,
-    height: 56,
+    width: '50%',
+    backgroundColor: '#FE6F03',
+    borderRadius: 5,
+    height: 45,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 16,
-    borderWidth: 2,
-    borderColor: '#FFF',
+    alignSelf: 'center',
   },
   loginButtonText: {
     color: '#FFF',

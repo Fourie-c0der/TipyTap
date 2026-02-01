@@ -11,14 +11,14 @@ export default function TabsLayout() {
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textLight,
         tabBarStyle: {
-          backgroundColor: '#1A1A1A',
-          borderTopWidth: 1,
-          borderTopColor: '#3A3A3A',
+          backgroundColor: '#0392FE',
+          borderBottomWidth: 1,
+          borderBottomColor: '#0274CA',
           paddingBottom: 8,
           paddingTop: 8,
           height: 70,
           elevation: 10,
-          shadowColor: '#000',
+          //shadowColor: '#313131',
           shadowOffset: { width: 0, height: -2 },
           shadowOpacity: 0.1,
           shadowRadius: 4,
@@ -26,25 +26,17 @@ export default function TabsLayout() {
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: '600',
-          marginTop: 4,
+          color: '#E8E8E8E8'
         },
+        tabBarPosition: 'top'
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tip',
+          title: 'Home',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="gift" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="history"
-        options={{
-          title: 'History',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="time" size={size} color={color} />
+            <Ionicons name="home" size={size} color={color} />
           ),
         }}
       />
@@ -58,9 +50,18 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="wallet"
+        options={{
+          title: 'Wallet',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="wallet" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="help"
         options={{
-          title: 'Help',
+          title: 'Info',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="help-circle" size={size} color={color} />
           ),

@@ -1,7 +1,7 @@
 // Color constants for consistent theming
 
 export const colors = {
-  primary: '#6C63FF',
+  primary: '#E8E8E8',
   primaryDark: '#5A52D5',
   primaryLight: '#8B84FF',
   
@@ -30,11 +30,13 @@ export const colors = {
   borderDark: '#CBD5E0',
   
   gradient: {
-    start: '#6C63FF',
-    middle: '#8B5CF6',
-    end: '#EC4899',
+    start: '#bd5200',
+    middle: '#FE6F03',
+    end: '#ff872b',
   },
-  
+
+  newPrimary: '#FE6F03',
+
   amounts: {
     R2: '#FF6B9D',
     R5: '#4ECDC4',
