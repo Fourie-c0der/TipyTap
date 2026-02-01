@@ -3,6 +3,14 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, View, ImageBackground } from 'react-native';
 import { config } from '../constants/config';
 
+import backgroundR2 from '../assets/images/R2-coin.jpg';
+import backgroundR5 from '../assets/images/R5-coin.jpg';
+import backgroundR10 from '../assets/images/R10-note.jpg';
+import backgroundR20 from '../assets/images/R20-note.jpg';
+import backgroundR50 from '../assets/images/R50-note.jpg';
+import backgroundR100 from '../assets/images/R100-note.jpg';
+import backgroundR200 from '../assets/images/R200-note.jpg';
+
 interface AmountButtonProps {
   amount: number | 'custom';
   onPress: () => void;
