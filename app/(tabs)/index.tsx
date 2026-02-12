@@ -35,7 +35,7 @@ export default function TipIndex() {
 
       <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}></ImageBackground>
 
-      <WalletCard balance={123.45} lastUpdated={new Date()} />
+      {/* <WalletCard balance={123.45} lastUpdated={new Date()} /> */}
 
       <Text style={styles.sectionTitle}>Choose Amount</Text>
 
@@ -49,8 +49,6 @@ export default function TipIndex() {
           />
         ))}
       </View>
-
-
     </ScrollView>
   );
 }

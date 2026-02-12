@@ -11,14 +11,14 @@ export default function TabsLayout() {
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textLight,
         tabBarStyle: {
-          backgroundColor: '#0392FE',
+          backgroundColor: '#FFA500', // Orange color
           borderBottomWidth: 1,
-          borderBottomColor: '#0274CA',
+          borderBottomColor: '#FFA500',
           paddingBottom: 8,
           paddingTop: 8,
           height: 70,
           elevation: 10,
-          //shadowColor: '#313131',
+          //shadowColor: '#6b6a6a',
           shadowOffset: { width: 0, height: -2 },
           shadowOpacity: 0.1,
           shadowRadius: 4,
