@@ -10,6 +10,7 @@ import {
   TextInput,
   Modal,
   ActivityIndicator,
+  ImageBackground,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -141,6 +142,7 @@ export default function ProfileScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+      <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}></ImageBackground>
       {/* Header */}
       <View style={styles.header}>
         <View>
@@ -344,6 +346,7 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
+  bg: { opacity: 0.45, position: 'absolute', top: 0 },
   container: {
     flex: 1,
     backgroundColor: '#2A2A2A',

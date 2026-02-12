@@ -24,10 +24,11 @@ export default function TipIndex() {
     setSelected(amount as number);
   };
 
-  const handleScan = () => {
-    const amount = selected ?? config.TIP_AMOUNTS[0];
-    router.push(`/scanner?amount=${amount}`);
+  const handleScan = (amount?: number) => {
+    const finalAmount = amount ?? selected ?? config.TIP_AMOUNTS[0];
+    router.push(`/scanner?amount=${finalAmount}`);
   };
+
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -43,7 +44,7 @@ export default function TipIndex() {
           <AmountButton
             key={amt}
             amount={amt}
-            onPress={() => handleSelect(amt)}
+            onPress={() => handleScan(amt)}
             selected={selected === amt}
           />
         ))}

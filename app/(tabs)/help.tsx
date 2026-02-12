@@ -9,6 +9,7 @@ import {
   Linking,
   TextInput,
   Alert,
+  ImageBackground
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../../src/constants/colors';
@@ -99,6 +100,7 @@ export default function HelpScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       {/* Header */}
+      <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}></ImageBackground>
       <View style={styles.header}>
         <Text style={styles.title}>Help & Support</Text>
         <Text style={styles.subtitle}>We're here to help you</Text>
@@ -206,6 +208,7 @@ export default function HelpScreen() {
 }
 
 const styles = StyleSheet.create({
+bg: { opacity: 0.45, position: 'absolute', top: 0 },
   container: {
     flex: 1,
     backgroundColor: '#2A2A2A',
@@ -224,7 +227,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    color: colors.textSecondary,
+    color: 'white',
     marginTop: 4,
   },
   section: {
