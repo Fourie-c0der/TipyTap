@@ -1,11 +1,11 @@
-import {Text, View} from 'react-native';
+// import {Text, View} from 'react-native';
 
-const Page = () => {
-    return (
-        <View>
-            <Text>Wallet Tab</Text>
-        </View>
-    );
-};
+// const Page = () => {
+//     return (
+//         <View>
+//             <Text>Wallet Tab</Text>
+//         </View>
+//     );
+// };
 
-export default Page;
+// export default Page;

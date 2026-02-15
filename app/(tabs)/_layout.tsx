@@ -49,7 +49,7 @@ export default function TabsLayout() {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="wallet"
         options={{
           title: 'Wallet',
@@ -57,7 +57,7 @@ export default function TabsLayout() {
             <Ionicons name="wallet" size={size} color={color} />
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="help"
         options={{

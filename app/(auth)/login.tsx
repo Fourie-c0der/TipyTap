@@ -54,7 +54,7 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
 
-      <ImageBackground style={styles.bg} source={background}></ImageBackground>
+      <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}></ImageBackground>
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
