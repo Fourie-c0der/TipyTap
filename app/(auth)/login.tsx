@@ -11,6 +11,7 @@ import {
   Platform,
   Alert,
   ActivityIndicator,
+  ImageBackground
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -18,8 +19,6 @@ import { useRouter } from 'expo-router';
 import authService from '../../src/services/authService';
 import Validators from '../../src/utils/validators';
 import colors from '../../src/constants/colors';
-
-import { ImageBackground } from 'react-native';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -54,7 +53,7 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
 
-      <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}></ImageBackground>
+      <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}>
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -116,12 +115,20 @@ export default function LoginScreen() {
 
             <TouchableOpacity onPress={() => router.push('/(auth)/register')}>
               <Text style={styles.registerText}>
-                Don't have an account? <Text style={styles.registerLink}>Register</Text>
+                Don{'\''}t have an account? <Text style={styles.registerLink}>Register</Text>
+              </Text>
+            </TouchableOpacity>
+            
+            {/* Skip login (Dev build purposes) */}
+            <TouchableOpacity onPress={() => router.push('/(tabs)')}>
+              <Text style={styles.registerText}>
+                skip login, yes cus we devs {'\:)'}
               </Text>
             </TouchableOpacity>
           </View>
         </View>
       </KeyboardAvoidingView>
+      </ImageBackground>
     </View>
   );
 }
@@ -131,7 +138,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000',
   },
-  bg: { opacity: 0.45, position: 'absolute', top: 0 },
+  bg: { flex:1, width: '100%', height: '100%' },
   keyboardView: {
     flex: 1,
   },

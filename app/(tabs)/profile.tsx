@@ -141,8 +141,8 @@ export default function ProfileScreen() {
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
-      <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}></ImageBackground>
+    <ScrollView style={styles.container}>
+      <ImageBackground source={require('../../src/assets/images/background.png')}>
       {/* Header */}
       <View style={styles.header}>
         <View>
@@ -216,7 +216,7 @@ export default function ProfileScreen() {
       {/* Settings */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Settings</Text>
-                <TouchableOpacity
+          <TouchableOpacity
           style={styles.actionCard}
           onPress={() => router.push('/(auth)/pin')}
         >
@@ -227,7 +227,7 @@ export default function ProfileScreen() {
             <Text style={styles.actionTitle}>Add/Change PIN</Text>
             <Text style={styles.actionSubtitle}>Update your security PIN</Text>
           </View>
-          <Ionicons name="chevron-forward-circle" size={20} color={colors.textLight} />
+          <Ionicons name="chevron-forward" size={20} color={colors.textLight} />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -357,25 +357,20 @@ export default function ProfileScreen() {
           </View>
         </View>
       </Modal>
+      </ImageBackground>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  bg: { opacity: 0.45, position: 'absolute', top: 0 },
   container: {
-    flex: 1,
     backgroundColor: '#2A2A2A',
-  },
-  scrollContent: {
-    paddingBottom: 100,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 20,
-    paddingTop: 60,
+    padding: 20
   },
   greeting: {
     fontSize: 28,
@@ -420,6 +415,7 @@ const styles = StyleSheet.create({
   },
   logoutCard: {
     marginTop: 8,
+    marginBottom: 50
   },
   actionIcon: {
     width: 48,

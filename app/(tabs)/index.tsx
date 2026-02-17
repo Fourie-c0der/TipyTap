@@ -31,13 +31,13 @@ export default function TipIndex() {
 
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView style={styles.container}>
 
-      <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}></ImageBackground>
+      <ImageBackground source={require('../../src/assets/images/background.png')}>
 
       {/* <WalletCard balance={123.45} lastUpdated={new Date()} /> */}
 
-      <Text style={styles.sectionTitle}>Choose Amount</Text>
+      <Text style={styles.sectionTitle}>Choose Amount To Tip</Text>
 
       <View style={styles.grid}>
         {config.TIP_AMOUNTS.map((amt) => (
@@ -49,14 +49,13 @@ export default function TipIndex() {
           />
         ))}
       </View>
+      </ImageBackground>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { backgroundColor: '#000' },
-  bg: { opacity: 0.45, position: 'absolute', top: 0 },
-  content: { paddingVertical: 20 },
   sectionTitle: {
     color: '#FFF',
     fontSize: 18,
@@ -66,10 +65,9 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    marginHorizontal: 20,
+    flex: 1,
+    margin: 5,
+    alignItems: 'center'
   },
   scanButton: {
     backgroundColor: colors.primary,

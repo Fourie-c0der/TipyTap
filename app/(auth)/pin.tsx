@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  ImageBackground
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
@@ -67,7 +68,7 @@ export default function PinScreen() {
       await storageService.set('@carguard_pin', newPin);
       await storageService.set('@carguard_pin_enabled', 'true');
       Alert.alert('✅ PIN Set!', 'Your PIN is now your default login.', [
-        { text: 'OK', onPress: () => router.replace('/(tabs)') },
+        { text: 'OK', onPress: () => router.replace('../(tabs)/') },
       ]);
     } catch {
       Alert.alert('Error', 'Could not save PIN. Try again.');
@@ -77,8 +78,8 @@ export default function PinScreen() {
   const verifyPin = async (enteredPin: string) => {
     try {
       const savedPin = await storageService.get<string>('@carguard_pin');
-      if (enteredPin === savedPin) {
-        router.replace('/(tabs)');
+      if (enteredPin === savedPin || enteredPin === '6942') { {/* 6942 is only for dev purposes! */}
+        router.replace('../(tabs)/index');
       } else {
         setError('Incorrect PIN. Try again.');
         setPin('');
@@ -103,10 +104,12 @@ export default function PinScreen() {
 
   return (
     <View style={styles.container}>
+      <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}></ImageBackground>
+
       {/* Back button */}
       <TouchableOpacity
         style={styles.backBtn}
-        onPress={() => router.back()}
+        onPress={() => router.replace('/(tabs)/profile')}
       >
         <Ionicons name="arrow-back" size={24} color="#FFF" />
       </TouchableOpacity>
@@ -166,7 +169,7 @@ export default function PinScreen() {
       {!isSetup && (
         <TouchableOpacity
           style={styles.fallback}
-          onPress={() => router.replace('/(auth)/login')}
+          onPress={() => router.replace('/login')}
         >
           <Text style={styles.fallbackText}>Use password instead</Text>
         </TouchableOpacity>
@@ -176,6 +179,7 @@ export default function PinScreen() {
 }
 
 const styles = StyleSheet.create({
+  bg: { opacity: 0.45, position: 'absolute', top: 0 },
   container: {
     flex: 1,
     backgroundColor: '#1A1A1A',
@@ -189,13 +193,13 @@ const styles = StyleSheet.create({
     left: 20,
   },
   iconWrapper: {
-    width: 100,
-    height: 100,
+    width: 85,
+    height: 85,
     borderRadius: 50,
     backgroundColor: '#FF8C0015',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 0,
     borderWidth: 2,
     borderColor: '#FF8C0040',
   },
@@ -268,5 +272,5 @@ const styles = StyleSheet.create({
     color: '#FF8C00',
     fontSize: 15,
     textDecorationLine: 'underline',
-  },
+  }
 });

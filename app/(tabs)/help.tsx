@@ -98,12 +98,12 @@ export default function HelpScreen() {
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+    <ScrollView style={styles.container}>
       {/* Header */}
-      <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}></ImageBackground>
+      <ImageBackground source={require('../../src/assets/images/background.png')}>
       <View style={styles.header}>
         <Text style={styles.title}>Help & Support</Text>
-        <Text style={styles.subtitle}>We're here to help you</Text>
+        <Text style={styles.subtitle}>We{'\''}re here to help you</Text>
       </View>
 
       {/* Quick Contact Buttons */}
@@ -203,18 +203,15 @@ export default function HelpScreen() {
           Empowering Car Guards Across South Africa
         </Text>
       </View>
+      </ImageBackground>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-bg: { opacity: 0.45, position: 'absolute', top: 0 },
   container: {
     flex: 1,
     backgroundColor: '#2A2A2A',
-  },
-  scrollContent: {
-    paddingBottom: 100,
   },
   header: {
     padding: 20,
@@ -373,8 +370,9 @@ bg: { opacity: 0.45, position: 'absolute', top: 0 },
   },
   appInfo: {
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: 10,
     marginBottom: 20,
+    paddingBottom: 25
   },
   appInfoText: {
     fontSize: 14,

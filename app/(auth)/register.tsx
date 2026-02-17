@@ -11,6 +11,7 @@ import {
   Alert,
   ScrollView,
   ActivityIndicator,
+  ImageBackground
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -71,6 +72,9 @@ export default function RegisterScreen() {
 
   return (
     <View style={styles.container}>
+
+      <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}>
+
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
@@ -168,11 +172,13 @@ export default function RegisterScreen() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+      </ImageBackground>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  bg: { flex:1, width: '100%', height: '100%' },
   container: {
     flex: 1,
     backgroundColor: '#2A2A2A',
