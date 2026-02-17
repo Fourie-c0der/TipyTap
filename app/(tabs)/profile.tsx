@@ -216,6 +216,20 @@ export default function ProfileScreen() {
       {/* Settings */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Settings</Text>
+                <TouchableOpacity
+          style={styles.actionCard}
+          onPress={() => router.push('/(auth)/pin')}
+        >
+          <View style={[styles.actionIcon, { backgroundColor: colors.warning + '20' }]}>
+            <Ionicons name="pin" size={24} color={colors.warning} />
+          </View>
+          <View style={styles.actionContent}>
+            <Text style={styles.actionTitle}>Add/Change PIN</Text>
+            <Text style={styles.actionSubtitle}>Update your security PIN</Text>
+          </View>
+          <Ionicons name="chevron-forward-circle" size={20} color={colors.textLight} />
+        </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.actionCard}
           onPress={() => router.push('/(tabs)/help')}
