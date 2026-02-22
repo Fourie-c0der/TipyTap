@@ -44,7 +44,8 @@ export default function LoginScreen() {
       await authService.login(email, password);
       router.replace('/(tabs)');
     } catch (error: any) {
-      Alert.alert('Login Failed', error.message || 'Invalid credentials');
+      console.error('Login error:', error);
+      Alert.alert('Login Failed', error.message || 'An error occurred during login');
     } finally {
       setLoading(false);
     }

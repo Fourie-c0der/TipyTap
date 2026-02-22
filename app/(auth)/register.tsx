@@ -64,6 +64,7 @@ export default function RegisterScreen() {
         { text: 'OK', onPress: () => router.replace('/(tabs)') }
       ]);
     } catch (error: any) {
+      console.error('Registration error:', error);
       Alert.alert('Registration Failed', error.message || 'Could not create account');
     } finally {
       setLoading(false);

@@ -13,6 +13,8 @@ class AuthService {
         throw new Error('Email and password are required');
       }
 
+      console.log('Attempting login for email:', email);
+
       // Sign in with Supabase
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
@@ -20,12 +22,16 @@ class AuthService {
       });
 
       if (error) {
+        console.error('Supabase login error:', error);
         throw new Error(error.message);
       }
 
       if (!data.user) {
+        console.error('No user data returned from Supabase');
         throw new Error('Login failed');
       }
+
+      console.log('Supabase login successful, user ID:', data.user.id);
 
       // Get user profile from database
       const { data: profile, error: profileError } = await supabase
@@ -36,6 +42,9 @@ class AuthService {
 
       if (profileError) {
         console.error('Profile fetch error:', profileError);
+        console.log('Profile not found, using default values');
+      } else {
+        console.log('Profile fetched:', profile);
       }
 
       // Create user object
@@ -47,6 +56,8 @@ class AuthService {
         userType: 'tipper',
         createdAt: new Date(data.user.created_at),
       };
+
+      console.log('User object created:', user);
 
       // Save user and session locally
       await storageService.saveUser(user);
@@ -69,6 +80,8 @@ class AuthService {
         throw new Error('All fields are required');
       }
 
+      console.log('Attempting registration for email:', email, 'name:', name);
+
       // Sign up with Supabase
       const { data, error } = await supabase.auth.signUp({
         email: email,
@@ -76,12 +89,16 @@ class AuthService {
       });
 
       if (error) {
+        console.error('Supabase signUp error:', error);
         throw new Error(error.message);
       }
 
       if (!data.user) {
+        console.error('No user data returned from Supabase signUp');
         throw new Error('Registration failed');
       }
+
+      console.log('Supabase signUp successful, user ID:', data.user.id);
 
       // Create user profile in database
       const { error: profileError } = await supabase
@@ -97,7 +114,10 @@ class AuthService {
 
       if (profileError) {
         console.error('Profile creation error:', profileError);
+        throw new Error(`Failed to create user profile: ${profileError.message}`);
       }
+
+      console.log('Profile created successfully');
 
       const user: User = {
         id: data.user.id,
