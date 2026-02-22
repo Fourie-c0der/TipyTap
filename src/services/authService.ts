@@ -5,283 +5,173 @@ import { config } from '../constants/config';
 import { supabase } from '../services/supabase';
 
 class AuthService {
-  // Login with email and password
+
+  // -------------------------
+  // LOGIN
+  // -------------------------
   async login(email: string, password: string): Promise<User> {
-    try {
-      // Validate inputs
-      if (!email || !password) {
-        throw new Error('Email and password are required');
-      }
-
-      console.log('Attempting login for email:', email);
-
-      // Sign in with Supabase
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      });
-
-      if (error) {
-        console.error('Supabase login error:', error);
-        throw new Error(error.message);
-      }
-
-      if (!data.user) {
-        console.error('No user data returned from Supabase');
-        throw new Error('Login failed');
-      }
-
-      console.log('Supabase login successful, user ID:', data.user.id);
-
-      // Get user profile from database
-      const { data: profile, error: profileError } = await supabase
-        .from('users')
-        .select('*')
-        .eq('id', data.user.id)
-        .single();
-
-      if (profileError) {
-        console.error('Profile fetch error:', profileError);
-        console.log('Profile not found, using default values');
-      } else {
-        console.log('Profile fetched:', profile);
-      }
-
-      // Create user object
-      const user: User = {
-        id: data.user.id,
-        email: data.user.email || email,
-        name: profile?.name || email.split('@')[0],
-        phoneNumber: profile?.phone_number,
-        userType: 'tipper',
-        createdAt: new Date(data.user.created_at),
-      };
-
-      console.log('User object created:', user);
-
-      // Save user and session locally
-      await storageService.saveUser(user);
-      await storageService.saveToken(data.session?.access_token || '');
-
-      // Initialize wallet if it doesn't exist
-      await this.initializeWallet(user.id);
-
-      return user;
-    } catch (error) {
-      console.error('Login error:', error);
-      throw error;
+    if (!email || !password) {
+      throw new Error('Email and password are required');
     }
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error || !data.user) {
+      throw new Error(error?.message || 'Login failed');
+    }
+
+    // Fetch profile from public.users
+    const { data: profile, error: profileError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', data.user.id)
+      .single();
+
+    if (profileError || !profile) {
+      throw new Error('User profile not found');
+    }
+
+    const user: User = {
+      id: data.user.id,
+      email: data.user.email || '',
+      name: profile.name,
+      phoneNumber: profile.phone_number,
+      userType: profile.user_type || 'tipper',
+      createdAt: new Date(data.user.created_at),
+    };
+
+    await storageService.saveUser(user);
+    await storageService.saveToken(data.session?.access_token || '');
+
+    await this.initializeWallet(user.id);
+
+    return user;
   }
 
-  // Register new user
+  // -------------------------
+  // REGISTER
+  // -------------------------
   async register(email: string, password: string, name: string): Promise<User> {
-    try {
-      if (!email || !password || !name) {
-        throw new Error('All fields are required');
-      }
-
-      console.log('Attempting registration for email:', email, 'name:', name);
-
-      // Sign up with Supabase
-      const { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: password,
-      });
-
-      if (error) {
-        console.error('Supabase signUp error:', error);
-        throw new Error(error.message);
-      }
-
-      if (!data.user) {
-        console.error('No user data returned from Supabase signUp');
-        throw new Error('Registration failed');
-      }
-
-      console.log('Supabase signUp successful, user ID:', data.user.id);
-
-      // Create user profile in database
-      const { error: profileError } = await supabase
-        .from('users')
-        .insert({
-          id: data.user.id,
-          email: email,
-          name: name,
-          user_type: 'tipper',
-          wallet_balance: 0,
-          total_tipped: 0,
-        });
-
-      if (profileError) {
-        console.error('Profile creation error:', profileError);
-        throw new Error(`Failed to create user profile: ${profileError.message}`);
-      }
-
-      console.log('Profile created successfully');
-
-      const user: User = {
-        id: data.user.id,
-        email: email,
-        name: name,
-        userType: 'tipper',
-        createdAt: new Date(),
-      };
-
-      // Save locally
-      await storageService.saveUser(user);
-      await storageService.saveToken(data.session?.access_token || '');
-
-      // Initialize wallet
-      await this.initializeWallet(user.id);
-
-      return user;
-    } catch (error) {
-      console.error('Register error:', error);
-      throw error;
+    if (!email || !password || !name) {
+      throw new Error('All fields are required');
     }
+
+    // Only create auth user.
+    // Trigger will create public.users row automatically.
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name: name, // passed to trigger via metadata
+        },
+      },
+    });
+
+    if (error || !data.user) {
+      throw new Error(error?.message || 'Registration failed');
+    }
+
+    // Fetch profile (created by trigger)
+    const { data: profile, error: profileError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', data.user.id)
+      .single();
+
+    if (profileError || !profile) {
+      throw new Error('Profile creation failed');
+    }
+
+    const user: User = {
+      id: data.user.id,
+      email: data.user.email || email,
+      name: profile.name,
+      userType: profile.user_type || 'tipper',
+      createdAt: new Date(data.user.created_at),
+    };
+
+    await storageService.saveUser(user);
+    await storageService.saveToken(data.session?.access_token || '');
+
+    await this.initializeWallet(user.id);
+
+    return user;
   }
 
-  // Initialize wallet for user
-  private async initializeWallet(userId: string): Promise<void> {
-    try {
-      const wallet = {
-        userId: userId,
-        balance: 0,
-        currency: config.CURRENCY,
-        lastUpdated: new Date(),
-      };
-      await storageService.saveWallet(wallet);
-    } catch (error) {
-      console.error('Wallet init error:', error);
-    }
-  }
-
-  // Logout
+  // -------------------------
+  // LOGOUT
+  // -------------------------
   async logout(): Promise<void> {
-    try {
-      // Sign out from Supabase
-      await supabase.auth.signOut();
-      
-      // Clear local storage
-      await storageService.removeUser();
-      await storageService.removeToken();
-      await storageService.remove('@carguard_wallet');
-    } catch (error) {
-      console.error('Logout error:', error);
-      throw error;
-    }
+    await supabase.auth.signOut();
+    await storageService.removeUser();
+    await storageService.removeToken();
+    await storageService.remove('@carguard_wallet');
   }
 
-  // Get current user
+  // -------------------------
+  // GET CURRENT USER
+  // -------------------------
   async getCurrentUser(): Promise<User | null> {
-    try {
-      // Try to get from local storage first
-      const localUser = await storageService.getUser();
-      if (localUser) return localUser;
+    const { data, error } = await supabase.auth.getUser();
 
-      // If not in local storage, get from Supabase
-      const { data, error } = await supabase.auth.getUser();
-      
-      if (error || !data.user) {
-        return null;
-      }
+    if (error || !data.user) return null;
 
-      // Fetch user profile
-      const { data: profile } = await supabase
-        .from('users')
-        .select('*')
-        .eq('id', data.user.id)
-        .single();
+    const { data: profile } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', data.user.id)
+      .single();
 
-      if (!profile) return null;
+    if (!profile) return null;
 
-      const user: User = {
-        id: data.user.id,
-        email: data.user.email || '',
-        name: profile.name,
-        phoneNumber: profile.phone_number,
-        userType: 'tipper',
-        createdAt: new Date(data.user.created_at),
-      };
+    const user: User = {
+      id: data.user.id,
+      email: data.user.email || '',
+      name: profile.name,
+      phoneNumber: profile.phone_number,
+      userType: profile.user_type || 'tipper',
+      createdAt: new Date(data.user.created_at),
+    };
 
-      // Save to local storage
-      await storageService.saveUser(user);
+    await storageService.saveUser(user);
 
-      return user;
-    } catch (error) {
-      console.error('Get current user error:', error);
-      return null;
-    }
+    return user;
   }
 
-  // Check if user is authenticated
+  // SESSION CHECKS
+
   async isAuthenticated(): Promise<boolean> {
-    try {
-      // Check if PIN is enabled and valid
-      const pinEnabled = await storageService.get<string>('@carguard_pin_enabled');
-      if (pinEnabled === 'true') {
-        // If PIN login is enabled, user is authenticated if they have a valid session
-        const { data } = await supabase.auth.getSession();
-        return !!data.session;
-      }
-
-      // Otherwise check for valid token
-      const { data } = await supabase.auth.getSession();
-      return !!data.session;
-    } catch (error) {
-      return false;
-    }
+    const { data } = await supabase.auth.getSession();
+    return !!data.session;
   }
 
-  // Validate token
   async validateToken(): Promise<boolean> {
-    try {
-      const { data, error } = await supabase.auth.getSession();
-      return !error && !!data.session;
-    } catch (error) {
-      return false;
-    }
+    const { data, error } = await supabase.auth.getSession();
+    return !error && !!data.session;
   }
 
-  // Refresh session
   async refreshSession(): Promise<boolean> {
-    try {
-      const { data, error } = await supabase.auth.refreshSession();
-      if (error || !data.session) {
-        return false;
-      }
-      await storageService.saveToken(data.session.access_token);
-      return true;
-    } catch (error) {
-      return false;
-    }
+    const { data, error } = await supabase.auth.refreshSession();
+    if (error || !data.session) return false;
+
+    await storageService.saveToken(data.session.access_token);
+    return true;
   }
 
-  // Check if PIN is enabled
-  async isPinEnabled(): Promise<boolean> {
-    const pinEnabled = await storageService.get<string>('@carguard_pin_enabled');
-    return pinEnabled === 'true';
-  }
+  // Wallet init (LOCAL)
+  private async initializeWallet(userId: string): Promise<void> {
+    const wallet = {
+      userId,
+      balance: 0,
+      currency: config.CURRENCY,
+      lastUpdated: new Date(),
+    };
 
-  // Login with PIN
-  async loginWithPin(pin: string): Promise<boolean> {
-    try {
-      const savedPin = await storageService.get<string>('@carguard_pin');
-      if (pin === savedPin) {
-        // PIN is correct, check if session is still valid
-        const isValid = await this.validateToken();
-        if (isValid) {
-          return true;
-        } else {
-          // Session expired, refresh it
-          return await this.refreshSession();
-        }
-      }
-      return false;
-    } catch (error) {
-      console.error('PIN login error:', error);
-      return false;
-    }
+    await storageService.saveWallet(wallet);
   }
 }
 
