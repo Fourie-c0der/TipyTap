@@ -103,7 +103,7 @@ export default function ScannerScreen() {
             style={styles.backButton}
             onPress={() => router.back()}
           >
-            <Ionicons name="arrow-back" size={24} color="#FFF" />
+            <Ionicons name="arrow-back" size={24} color="#FFA500" />
           </TouchableOpacity>
           <View style={styles.amountBadge}>
             <Text style={styles.amountText}>
@@ -124,7 +124,7 @@ export default function ScannerScreen() {
 
         {/* Instructions */}
         <View style={styles.instructions}>
-          <Ionicons name="qr-code" size={48} color="#FFF" />
+          <Ionicons name="qr-code" size={48} color="#FFA500" />
           <Text style={styles.instructionText}>
             Scan Car Guard's QR Code
           </Text>
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   amountBadge: {
-    backgroundColor: colors.primary,
+    backgroundColor: "#FFA500",
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 20,

@@ -165,7 +165,6 @@ export default function ProfileScreen() {
       {/* Quick Actions */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Manage Funds</Text>
-        <WalletCard balance={123.45} lastUpdated={new Date()} />
         <TouchableOpacity
           style={styles.actionCard}
           onPress={() => setShowAddFundsModal(true)}
@@ -264,7 +263,6 @@ export default function ProfileScreen() {
         animationType="slide"
         onRequestClose={() => setShowAddFundsModal(false)}
       >
-        <WalletCard balance={123.45} lastUpdated={new Date()} />
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Add Funds</Text>
