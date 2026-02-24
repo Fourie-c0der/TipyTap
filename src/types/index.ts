@@ -5,7 +5,7 @@ export interface User {
   email: string;
   name: string;
   phoneNumber?: string;
-  userType: 'tipper' | 'guard';
+  userType: 'tipper' | 'carguard';
   createdAt: Date;
 }
 
@@ -31,7 +31,6 @@ export interface Transaction {
 
 export interface CarGuard {
   id: string;
-  name: string;
   qrCode: string;
   location: string;
   phoneNumber?: string;

@@ -122,6 +122,10 @@ export default function ProfileScreen() {
     }
   };
 
+  const handleQRCodeGeneration = async () => {
+    router.push('/getqrcode');
+  };
+
   const handleLogout = () => {
     Alert.alert(
       'Logout',
@@ -140,6 +144,11 @@ export default function ProfileScreen() {
     );
   };
 
+  const isCarguard = () => {
+    if (!user) return false;
+    return user.userType.includes('carguard');
+  };
+
   return (
     <ScrollView style={styles.container}>
       <ImageBackground source={require('../../src/assets/images/background.png')}>
@@ -147,7 +156,7 @@ export default function ProfileScreen() {
       <View style={styles.header}>
         <View>
           <Text style={styles.greeting}>Profile</Text>
-          <Text style={styles.subtitle}>{user?.email}</Text>
+          <Text style={styles.subtitle}>Welcome back, {'\n'}{user?.name}</Text>
         </View>
         <TouchableOpacity style={styles.avatarContainer}>
           <Ionicons name="person" size={32} color={colors.primary} />
@@ -161,6 +170,31 @@ export default function ProfileScreen() {
           lastUpdated={wallet.lastUpdated}
         />
       )}
+
+      {/* QR Code */}
+      {
+        isCarguard() ? (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>QR Code</Text>
+
+              <TouchableOpacity
+                  style={styles.actionCard}
+                  onPress={handleQRCodeGeneration}
+                >
+                  <View style={[styles.actionIcon, { backgroundColor: colors.warning + '20' }]}>
+                    <Ionicons name="qr-code-outline" size={24} color={colors.warning} />
+                  </View>
+                  <View style={styles.actionContent}>
+                    <Text style={styles.actionTitle}>Get QR Code</Text>
+                    <Text style={styles.actionSubtitle}>Download/Preview your QR code</Text>
+                  </View>
+                  <Ionicons name="chevron-forward" size={20} color={colors.textLight} />
+                </TouchableOpacity>
+
+          </View>
+        ) : null
+      }
+      
 
       {/* Quick Actions */}
       <View style={styles.section}>
@@ -197,6 +231,7 @@ export default function ProfileScreen() {
       {/* Documents */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Documents</Text>
+
         <TouchableOpacity
           style={styles.actionCard}
           onPress={handleGenerateStatement}
@@ -210,6 +245,7 @@ export default function ProfileScreen() {
           </View>
           <Ionicons name="chevron-forward" size={20} color={colors.textLight} />
         </TouchableOpacity>
+
       </View>
 
       {/* Settings */}

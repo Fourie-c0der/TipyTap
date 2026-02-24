@@ -27,7 +27,7 @@ export const config = {
     USER: '@carguard_user',
     TOKEN: '@carguard_token',
     WALLET: '@carguard_wallet',
-    TRANSACTIONS: '@carguard_transactions',
+    TRANSACTIONS: '@carguard_transactions'
   },
   
   // PDF Settings

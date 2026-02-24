@@ -3,13 +3,14 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, View, ImageBackground } from 'react-native';
 import { config } from '../constants/config';
 
-import backgroundR2 from '../assets/images/R2-coin.jpg';
-import backgroundR5 from '../assets/images/R5-coin.jpg';
-import backgroundR10 from '../assets/images/R10-note.jpg';
-import backgroundR20 from '../assets/images/R20-note.jpg';
-import backgroundR50 from '../assets/images/R50-note.jpg';
-import backgroundR100 from '../assets/images/R100-note.jpg';
-import backgroundR200 from '../assets/images/R200-note.jpg';
+// Tip Amount Button Imgs
+import R2Img from '../assets/images/R2-coin.jpg';
+import R5Img from '../assets/images/R5-coin.jpg';
+import R10Img from '../assets/images/R10-note.jpg';
+import R20Img from '../assets/images/R20-note.jpg';
+import R50Img from '../assets/images/R50-note.jpg';
+import R100Img from '../assets/images/R100-note.jpg';
+import R200Img from '../assets/images/R200-note.jpg';
 
 interface AmountButtonProps {
   amount: number | 'custom';
@@ -21,17 +22,17 @@ interface AmountButtonProps {
 const getBackground = (amount: number | 'custom') => {
   if (amount === 'custom') return '#1A1A1A';
   
-  const colorMap: { [key: number]: string } = {
-    2: require('../assets/images/R2-coin.jpg'),  // Copper (R2 coin)
-    5: require('../assets/images/R5-coin.jpg'),  // Silver (R5 coin)
-    10: require('../assets/images/R10-note.jpg'),  // Dark gold (R10 coin)
-    20: require('../assets/images/R20-note.jpg'), // Saddle brown (R20 note)
-    50: require('../assets/images/R50-note.jpg'), // Crimson (R50 note)
-    100: require('../assets/images/R100-note.jpg'), // Royal blue (R100 note)
-    200: require('../assets/images/R200-note.jpg'), // Dark orange (R200 note)
+  const Map: { [key: number]: string } = {
+    2: R2Img,  // Copper (R2 coin)
+    5: R5Img,  // Silver (R5 coin)
+    10: R10Img,  // Dark gold (R10 coin)
+    20: R20Img, // Saddle brown (R20 note)
+    50: R50Img, // Crimson (R50 note)
+    100: R100Img, // Royal blue (R100 note)
+    200: R200Img, // Dark orange (R200 note)
   };
   
-  return colorMap[amount as number] || '#FF8C00';
+  return Map[amount as number] || '#FF8C00';
 };
 
 export const AmountButton: React.FC<AmountButtonProps> = ({ amount, onPress, selected }) => {

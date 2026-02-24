@@ -1,5 +1,5 @@
 // Authentication service with Supabase
-import { User } from '../types';
+import { User, CarGuard } from '../types';
 import storageService from './storageService';
 import { config } from '../constants/config';
 import { supabase } from '../services/supabase';
@@ -116,31 +116,63 @@ class AuthService {
   // GET CURRENT USER
   // -------------------------
   async getCurrentUser(): Promise<User | null> {
-    const { data, error } = await supabase.auth.getUser();
+    const { data: authData, error: authError } = await supabase.auth.getUser();
+    if (authError || !authData.user) return null;
 
-    if (error || !data.user) return null;
+    const userId = authData.user.id;
 
-    const { data: profile } = await supabase
+    const { data: profile, error: profileError } = await supabase
       .from('users')
       .select('*')
-      .eq('id', data.user.id)
+      .eq('id', userId)
       .single();
 
-    if (!profile) return null;
+    if (profileError || !profile) return null;
 
     const user: User = {
-      id: data.user.id,
-      email: data.user.email || '',
+      id: userId,
+      email: authData.user.email ?? '',
       name: profile.name,
       phoneNumber: profile.phone_number,
-      userType: profile.user_type || 'tipper',
-      createdAt: new Date(data.user.created_at),
+      userType: profile.user_type ?? 'tipper',
+      createdAt: new Date(authData.user.created_at),
     };
 
     await storageService.saveUser(user);
-
     return user;
   }
+
+  // -------------------------
+  // GET CURRENT GUARD
+  // -------------------------
+  async getCurrentGuard(): Promise<CarGuard | null> {
+    const { data: authData, error: authError } = await supabase.auth.getUser();
+    if (authError || !authData.user) return null;
+
+    const userId = authData.user.id;
+
+    const { data: profile, error: guardError } = await supabase
+      .from('carguards') // match actual table name exactly
+      .select('*')
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (guardError || !profile) return null;
+
+    const user: CarGuard = {
+      id: profile.id,
+      qrCode: profile.qr_code,
+      location: profile.location,
+      phoneNumber: profile.phone_number,
+      verified: profile.verified,
+      rating: profile.rating,
+    };
+
+    await storageService.saveUser(user);
+    return user;
+  }
+
+
 
   // SESSION CHECKS
 

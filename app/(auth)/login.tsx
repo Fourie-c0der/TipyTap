@@ -1,5 +1,5 @@
 // Login screen
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   View,
   Text,
@@ -11,9 +11,10 @@ import {
   Platform,
   Alert,
   ActivityIndicator,
-  ImageBackground
+  ImageBackground,
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import authService from '../../src/services/authService';
@@ -52,6 +53,7 @@ export default function LoginScreen() {
   };
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
 
       <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}>
@@ -119,18 +121,13 @@ export default function LoginScreen() {
                 Don{'\''}t have an account? <Text style={styles.registerLink}>Register</Text>
               </Text>
             </TouchableOpacity>
-            
-            {/* Skip login (Dev build purposes) */}
-            <TouchableOpacity onPress={() => router.push('/(tabs)')}>
-              <Text style={styles.registerText}>
-                skip login, yes cus we devs {'\:)'}
-              </Text>
-            </TouchableOpacity>
+              
           </View>
         </View>
       </KeyboardAvoidingView>
       </ImageBackground>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

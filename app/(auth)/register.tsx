@@ -11,9 +11,10 @@ import {
   Alert,
   ScrollView,
   ActivityIndicator,
-  ImageBackground
+  ImageBackground,
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import authService from '../../src/services/authService';
@@ -72,6 +73,7 @@ export default function RegisterScreen() {
   };
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
 
       <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}>
@@ -90,7 +92,7 @@ export default function RegisterScreen() {
 
           <View style={styles.header}>
             <Text style={styles.title}>Create Account</Text>
-            <Text style={styles.subtitle}>Join CarGuard Tip today</Text>
+            <Text style={styles.subtitle}>Join TipyTap as a car guard today</Text>
           </View>
 
           <View style={styles.form}>
@@ -175,6 +177,7 @@ export default function RegisterScreen() {
       </KeyboardAvoidingView>
       </ImageBackground>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -220,11 +223,13 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    borderRadius: 12,
+    backgroundColor: 'rgba(81, 81, 81, 0.5)',
+    borderRadius: 5,
     paddingHorizontal: 16,
     marginBottom: 16,
     height: 56,
+    borderColor: '#FE6F03',
+    borderWidth: 2,
   },
   icon: {
     marginRight: 12,
@@ -235,14 +240,14 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   registerButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    borderRadius: 12,
-    height: 56,
+    width: '50%',
+    backgroundColor: '#FE6F03',
+    borderRadius: 5,
+    height: 45,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 16,
-    borderWidth: 2,
-    borderColor: '#FFF',
+    alignSelf: 'center',
   },
   registerButtonText: {
     color: '#FFF',
