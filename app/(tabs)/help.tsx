@@ -100,7 +100,7 @@ export default function HelpScreen() {
   return (
     <ScrollView style={styles.container}>
       {/* Header */}
-      <ImageBackground source={require('../../src/assets/images/background.png')}>
+      {/* <ImageBackground source={require('../../src/assets/images/background.png')}> */}
       <View style={styles.header}>
         <Text style={styles.title}>Help & Support</Text>
         <Text style={styles.subtitle}>We{'\''}re here to help you</Text>
@@ -203,7 +203,7 @@ export default function HelpScreen() {
           Empowering Car Guards Across South Africa
         </Text>
       </View>
-      </ImageBackground>
+      {/* </ImageBackground> */}
     </ScrollView>
   );
 }
@@ -211,7 +211,7 @@ export default function HelpScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2A2A2A',
+    backgroundColor: '#000000',
   },
   header: {
     padding: 20,

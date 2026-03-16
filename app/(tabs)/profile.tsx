@@ -151,7 +151,7 @@ export default function ProfileScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      <ImageBackground source={require('../../src/assets/images/background.png')}>
+      {/* <ImageBackground source={require('../../src/assets/images/background.png')}> */}
       {/* Header */}
       <View style={styles.header}>
         <View>
@@ -190,7 +190,6 @@ export default function ProfileScreen() {
                   </View>
                   <Ionicons name="chevron-forward" size={20} color={colors.textLight} />
                 </TouchableOpacity>
-
           </View>
         ) : null
       }
@@ -391,14 +390,14 @@ export default function ProfileScreen() {
           </View>
         </View>
       </Modal>
-      </ImageBackground>
+      {/* </ImageBackground> */}
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#2A2A2A',
+    backgroundColor: '#000000',
   },
   header: {
     flexDirection: 'row',

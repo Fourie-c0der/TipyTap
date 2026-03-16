@@ -6,6 +6,8 @@ import QRCode from 'react-native-qrcode-svg'
 import Colors from '../src/constants/colors'
 import { CarGuard } from '../src/types'
 import authService from '@/src/services/authService'
+import RNFS from 'react-native-fs';
+import { PermissionsAndroid, Platform, Alert} from 'react-native';
 
 export default function Getqrcode() {
 
@@ -30,12 +32,12 @@ export default function Getqrcode() {
 
     function handleDownload() {
         // Implement download functionality here
-        alert('Download functionality not implemented yet');
+        Alert.alert('Download', 'Download functionality is not implemented yet.');
     }
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../src/assets/images/background.png')} style={styles.bg}>
+      {/* <ImageBackground source={require('../src/assets/images/background.png')} style={styles.bg}> */}
         <TouchableOpacity
             style={styles.backBtn}
             onPress={() => router.replace('/(tabs)/profile')}
@@ -52,13 +54,13 @@ export default function Getqrcode() {
             />
         </View>
 
-        <TouchableOpacity style={styles.downloadBtnConatiner} onPress={handleDownload}>
+        <TouchableOpacity style={styles.downloadBtnConatiner} onPress={() => handleDownload()}>
             <Text style={styles.downloadBtn}>
                 Download <Ionicons name="download-outline" size={18} color="#FFF" style={{marginLeft: 5}} />
             </Text>
         </TouchableOpacity>
 
-      </ImageBackground>
+      {/* </ImageBackground> */}
     </View>
   )
 }

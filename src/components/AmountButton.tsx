@@ -50,8 +50,8 @@ export const AmountButton: React.FC<AmountButtonProps> = ({ amount, onPress, sel
           selected && styles.selected
         ]}>
           <View style={styles.overlay}>
-            <Text style={styles.amount}>{displayText}</Text>
-            {!isCustom && <Text style={styles.label}>Tap to tip</Text>}
+            {/* <Text style={styles.amount}>{displayText}</Text>
+            {!isCustom && <Text style={styles.label}>Tap to tip</Text>} */}
           </View>
 
         </View>
@@ -89,11 +89,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.45)',
+    // backgroundColor: 'rgba(0, 0, 0, 0.45)',
     // removed semi-transparent overlay to avoid extra compositing work
   },
   selected: {
-    borderWidth: 4,
+    borderWidth: 2,
     borderColor: '#FF8C00',
   },
   amount: {

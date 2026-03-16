@@ -33,7 +33,7 @@ export default function TipIndex() {
   return (
     <ScrollView style={styles.container}>
 
-      <ImageBackground source={require('../../src/assets/images/background.png')}>
+      {/* <ImageBackground source={require('../../src/assets/images/background.png')}> */}
 
       {/* <WalletCard balance={123.45} lastUpdated={new Date()} /> */}
 
@@ -49,7 +49,7 @@ export default function TipIndex() {
           />
         ))}
       </View>
-      </ImageBackground>
+      {/* </ImageBackground> */}
     </ScrollView>
   );
 }

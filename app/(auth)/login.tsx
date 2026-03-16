@@ -56,7 +56,7 @@ export default function LoginScreen() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
 
-      <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}>
+      {/* <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}> */}
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -125,7 +125,7 @@ export default function LoginScreen() {
           </View>
         </View>
       </KeyboardAvoidingView>
-      </ImageBackground>
+      {/* </ImageBackground> */}
     </View>
     </TouchableWithoutFeedback>
   );

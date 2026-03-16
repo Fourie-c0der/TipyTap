@@ -104,7 +104,7 @@ export default function PinScreen() {
 
   return (
     <View style={styles.container}>
-      <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}></ImageBackground>
+      {/* <ImageBackground style={styles.bg} source={require('../../src/assets/images/background.png')}></ImageBackground> */}
 
       {/* Back button */}
       <TouchableOpacity
